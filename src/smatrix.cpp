@@ -4,6 +4,7 @@
 
  /* Standard libraries */
  #include <cstdlib>
+ #include <cstdint>
  #include <iostream>
  #include <new>
  /* 3rd party libraries */
@@ -13,7 +14,8 @@
 /*
  * Constructor
  */
-smatrix::smatrix(T *query1, S query1_len, T *query2, S query2_len) {
+template <typename T, typename S>
+smatrix<T, S>::smatrix(T *query1, S query1_len, T *query2, S query2_len) {
     /* Populate the query related parameters */
     this->rows        = ((uint64_t)query1_len) + 1;
     this->columns     = ((uint64_t)query2_len) + 1;
@@ -45,11 +47,17 @@ smatrix::smatrix(T *query1, S query1_len, T *query2, S query2_len) {
 }
 
 
+template <typename T, typename S>
+void smatrix<T, S>::score() {
+    return;
+}
+
 
 /*
  * Destructor
  */
-smatrix::~smatrix() {
+template <typename T, typename S>
+smatrix<T, S>::~smatrix() {
     if(this->scores != nullptr) {
         delete[] this->scores;
     }

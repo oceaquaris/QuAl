@@ -35,7 +35,7 @@ struct smatrix {
         /*
          * User functions
          */
-        score()
+        void score();
 
         /*
          * Destructor
