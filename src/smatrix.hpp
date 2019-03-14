@@ -44,6 +44,8 @@ struct smatrix {
          * User functions
          */
         void score();
+        void print_scores_matrix(bool header);
+        void print_traceback_matrix(bool header);
 
         /*
          * Destructor

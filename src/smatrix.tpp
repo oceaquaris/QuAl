@@ -26,8 +26,8 @@ smatrix<T, S>::smatrix(T *query1,
     this->columns     = ((uint64_t)query2_len) + 1;
     this->query1      = query1;
     this->query1_len  = query1_len;
-    this->query1      = query2;
-    this->query1_len  = query2_len;
+    this->query2      = query2;
+    this->query2_len  = query2_len;
     this->scores      = nullptr;
     this->traceback   = nullptr;
     this->score_func  = score_func;
@@ -75,7 +75,6 @@ void smatrix<T, S>::score() {
             T score_query1_gap =
                 this->scores[(i-1)*(this->columns) + j]
                 - this->gap_penalty;
-                printf("%f\n", score_query1_gap);
 
             //Score for a gap in query2 (rows)
             T score_query2_gap =
@@ -111,6 +110,35 @@ void smatrix<T, S>::score() {
     }
 
     return;
+}
+
+template <typename T, typename S>
+void smatrix<T, S>::print_scores_matrix(bool header) {
+    if(header) {
+        printf("Scores matrix for %p:\n", this);
+    }
+    uint64_t i, j;
+    for(i = 0; i < this->rows; i++) {
+        for(j = 0; j < this->columns; j++) {
+            std::cout << this->scores[i*(this->columns) + j] << '\t';
+        }
+        std::cout << '\n';
+    }
+}
+
+
+template <typename T, typename S>
+void smatrix<T, S>::print_traceback_matrix(bool header) {
+    if(header) {
+        printf("Traceback matrix for %p:\n", this);
+    }
+    uint64_t i, j;
+    for(i = 0; i < this->rows; i++) {
+        for(j = 0; j < this->columns; j++) {
+            printf("%u\t", this->traceback[i*(this->columns) + j] );
+        }
+        std::cout << '\n';
+    }
 }
 
 
