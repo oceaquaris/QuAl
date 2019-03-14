@@ -43,4 +43,6 @@ struct smatrix {
         ~smatrix();
 };
 
+#include "smatrix.tpp"
+
 #endif
