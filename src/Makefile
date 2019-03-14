@@ -1,16 +1,22 @@
 CXX=g++
-CXXFLAGS=-std=c++0x
-SRCS=smatrix.cpp
+CXXFLAGS=-std=c++0x -fdiagnostics-color -Wall -g
+OPTIONS=$(CXXFLAGS)
+
+CPP_FILES=$(sort $(wildcard *.cpp))
+O_FILES=$(sort $(patsubst %.c,%.o,$(CPP_FILES)))
+
 
 all: QuAl
 
-QuAl: smatrix.o qual.o
-	$(CXX) -o QuAl $?
+%.o: %.c
+	@printf "Compiling %s..." $<
+	@$(CXX) $(OPTIONS) -c -o $@ $<
+	@printf "\t\t...Done\n"
 
-smatrix.o: smatrix.cpp smatrix.hpp
-	$(CXX) $(CXXFLAGS) -c smatrix.cpp
-qual.o: qual.cpp
-	$(CXX) $(CXXFLAGS) -c qual.cpp
+QuAl: $(O_FILES)
+	@printf "Compiling %s..." $@
+	@$(CXX) $(OPTIONS) -o $@ $^
+	@printf "\t\t...Done\n"
 
 clean:
-	rm *.o
+	rm -f *.o QuAl
